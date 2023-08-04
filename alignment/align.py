@@ -61,12 +61,11 @@ def rcsls(X_src, Y_tgt, Z_src, Z_tgt, R, knn=10):
     df = df - dfk0 - dfk1.T
     return -f / X_src.shape[0], -df / X_src.shape[0]
 
-
 def proj_spectral(R):
     U, s, V = np.linalg.svd(R)
-    s[s > 1] = 1
-    s[s < 0] = 0
+    s = np.clip(s, 0, 1)
     return np.dot(U, np.dot(np.diag(s), V))
+
 
 
 ###### MAIN ######
